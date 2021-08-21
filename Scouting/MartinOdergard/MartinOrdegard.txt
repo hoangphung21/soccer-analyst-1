@@ -1,0 +1,23 @@
+Statistic,Per 90,Percentile
+Non-Penalty Goals,0.11,15
+npxG,0.10,9
+Shots Total,1.42,19
+Assists,0.11,21
+xA,0.22,76
+npxG+xA,0.32,33
+Shot-Creating Actions,4.25,84
+,,
+Passes Attempted,58.31,96
+Pass Completion %,85.9%,98
+Progressive Passes,4.63,86
+Progressive Carries,8.60,91
+Dribbles Completed,1.20,24
+Touches (Att Pen),2.94,28
+Progressive Passes Rec,4.85,21
+,,
+Pressures,16.28,56
+Tackles,0.82,13
+Interceptions,0.54,25
+Blocks,0.27,1
+Clearances,0.44,41
+Aerials won,0.44,28
