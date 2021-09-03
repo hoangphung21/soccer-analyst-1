@@ -71,6 +71,7 @@ select *, (RollingPeopleVaccinated/Population)*100
 from PopvsVac
 
 -- Using Temp Table to perform Calculation on Partition By in previous query
+-- RollingPeopleVaccinated is the doses given
 
 DROP Table if exists #PercentPopulationVaccinated
 Create Table #PercentPopulationVaccinated
@@ -85,17 +86,14 @@ RollingPeopleVaccinated numeric
 
 Insert into #PercentPopulationVaccinated
 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
-, SUM(CONVERT(int,vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location, dea.Date) as RollingPeopleVaccinated
+, SUM(CONVERT(numeric,vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location, dea.Date) as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
-From PortfolioProjects.dbo.CovidDeaths dea
-Join PortfolioProjects.dbo.CovidVaccinations vac
+From PortfolioProjects..CovidDeaths dea
+Join PortfolioProjects..CovidVaccinations vac
 	On dea.location = vac.location
 	and dea.date = vac.date
-where dea.continent is not null 
+--where dea.continent is not null 
 --order by 2,3
-
-Select *, (RollingPeopleVaccinated/Population)*100
-From #PercentPopulationVaccinated
 
 
 -- Create view to store data for visualizations
@@ -110,3 +108,15 @@ Join PortfolioProjects.dbo.CovidVaccinations vac
 where dea.continent is not null 
 --order by 2,3
 
+
+select  dea.location, 
+		max(dea.population) as population,
+		max(CONVERT(numeric,vac.people_vaccinated))  as numberOfVaccinatedpeople
+		
+from PortfolioProjects..CovidVaccinations vac
+join PortfolioProjects..CovidDeaths dea
+	on dea.location = vac.location
+	and dea.date = vac.date
+where dea.continent is not null and vac.people_vaccinated is not null 
+group by dea.location
+order by numberOfVaccinatedpeople desc
