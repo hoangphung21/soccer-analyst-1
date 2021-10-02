@@ -1,5 +1,5 @@
 /****** Script for SelectTopNRows command from SSMS  ******/
- SELECT [ls]
+ SELECT short_name,[ls]
       ,[st]
       ,[rs]
       ,[lw]
@@ -50,7 +50,7 @@ into fifa21
 
 --select * from @t2
 
-declare @tabformula as table (id int identity(1,1), formula varchar(200)) 
+declare @tabformula as table (id int identity(1,1), formulals varchar(200),formulast varchar(200),formulars varchar(200),formulalw varchar(200),formulalf varchar(200) )
 declare @tabresult as table (id int, result int)
 
 
@@ -60,19 +60,24 @@ from fifa21
 
 
 declare c cursor for 
-select ID,formula 
+select ID,formulals 
 from @tabformula 
 declare @id as int 
-declare @formula as varchar(200)
+declare @formulals as varchar(200)
 
-open c fetch c into @id,@formula 
+open c fetch c into @id,@formulals 
 while @@fetch_status=0 
 begin 
-	print @formula insert into @tabresult (id,result) 
-	exec( 'select '+ @id +','+@formula ) 
-	fetch c into @id,@formula 
+	print @formulals insert into @tabresult (id,result) 
+	exec( 'select '+ @id +','+@formulals ) 
+	fetch c into @id,@formulals 
 end 
 close c deallocate c
-select T1.id,t1.formula,T2.result from @tabformula t1 inner join
+select T1.id,t1.formulals,T2.result 
+from @tabformula t1 
+inner join
 @tabresult t2 on t1.id=t2.id
+
+select *
+FROM fifa21
 
